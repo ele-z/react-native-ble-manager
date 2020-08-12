@@ -410,11 +410,21 @@ public class Peripheral extends BluetoothGattCallback {
 			} else {
 
 				if (status == BluetoothGatt.GATT_SUCCESS) {
-					writeCallback.invoke();
-				} else {
-					Log.e(BleManager.LOG_TAG, "Error onCharacteristicWrite:" + status);
-					writeCallback.invoke("Error writing status: " + status);
-				}
+                     WritableMap map = Arguments.createMap();
+                     map.putInt("code", 0);
+                     map.putString("message", "操作成功");
+
+
+                     writeCallback.invoke(map);
+                    } else {
+                     Log.e(BleManager.LOG_TAG, "Error onCharacteristicWrite:" + status);
+
+                     WritableMap map = Arguments.createMap();
+                     map.putInt("code", status);
+                     map.putString("message", "Error writing status: " + status);
+
+                     writeCallback.invoke(map);
+                }
 
 				writeCallback = null;
 			}

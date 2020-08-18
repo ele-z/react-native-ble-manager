@@ -75,6 +75,14 @@ declare module "react-native-ble-manager" {
     data: any,
     maxByteSize?: number
   ): Promise<void>;
+  export function androidWrite(
+      peripheralID: string,
+      serviceUUID: string,
+      characteristicUUID: string,
+      data: any,
+      maxByteSize?: number,
+      isSub?:boolean
+  ): Promise<void>;
   export function writeWithoutResponse(
     peripheralID: string,
     serviceUUID: string,

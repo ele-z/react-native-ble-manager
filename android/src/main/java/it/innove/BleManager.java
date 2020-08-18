@@ -334,6 +334,27 @@ class BleManager extends ReactContextBaseJavaModule implements ActivityEventList
 	}
 
 	@ReactMethod
+    	public void androidWrite(String deviceUUID, String serviceUUID, String characteristicUUID, ReadableArray message,
+    			Integer maxByteSize, isSub, Callback callback) {
+    		Log.d(LOG_TAG, "Write to: " + deviceUUID);
+    		if (serviceUUID == null || characteristicUUID == null) {
+    			callback.invoke("ServiceUUID and characteristicUUID required.");
+    			return;
+    		}
+    		Peripheral peripheral = peripherals.get(deviceUUID);
+    		if (peripheral != null) {
+    			byte[] decoded = new byte[message.size()];
+    			for (int i = 0; i < message.size(); i++) {
+    				decoded[i] = new Integer(message.getInt(i)).byteValue();
+    			}
+    			Log.d(LOG_TAG, "Message(" + decoded.length + "): " + bytesToHex(decoded));
+    			peripheral.androidWrite(UUIDHelper.uuidFromString(serviceUUID), UUIDHelper.uuidFromString(characteristicUUID),
+    					decoded, maxByteSize, null, isSub,callback, BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT);
+    		} else
+    			callback.invoke("Peripheral not found");
+    	}
+
+	@ReactMethod
 	public void writeWithoutResponse(String deviceUUID, String serviceUUID, String characteristicUUID,
 			ReadableArray message, Integer maxByteSize, Integer queueSleepTime, Callback callback) {
 		Log.d(LOG_TAG, "Write without response to: " + deviceUUID);

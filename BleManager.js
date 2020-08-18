@@ -86,6 +86,29 @@ class BleManager {
     });
   }
 
+  androidWrite(peripheralId, serviceUUID, characteristicUUID, data, maxByteSize,isSub = false) {
+    if (maxByteSize == null) {
+      maxByteSize = 20;
+    }
+    return new Promise((fulfill, reject) => {
+      bleManager.androidWrite(
+          peripheralId,
+          serviceUUID,
+          characteristicUUID,
+          data,
+          maxByteSize,
+          isSub,
+          error => {
+            if (error) {
+              reject(error);
+            } else {
+              fulfill();
+            }
+          },isSub
+      );
+    });
+  }
+
   writeWithoutResponse(
     peripheralId,
     serviceUUID,

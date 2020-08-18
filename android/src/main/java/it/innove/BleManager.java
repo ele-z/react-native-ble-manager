@@ -335,7 +335,7 @@ class BleManager extends ReactContextBaseJavaModule implements ActivityEventList
 
 	@ReactMethod
     	public void androidWrite(String deviceUUID, String serviceUUID, String characteristicUUID, ReadableArray message,
-    			Integer maxByteSize, isSub, Callback callback) {
+    			Integer maxByteSize,boolean isSub, Callback callback) {
     		Log.d(LOG_TAG, "Write to: " + deviceUUID);
     		if (serviceUUID == null || characteristicUUID == null) {
     			callback.invoke("ServiceUUID and characteristicUUID required.");

@@ -263,7 +263,21 @@ class BleManager extends ReactContextBaseJavaModule implements ActivityEventList
 			peripheral.disconnect(force);
 			callback.invoke();
 		} else
-			callback.invoke("Peripheral not found");
+
+		    Set<String> perList = peripherals.keySet();
+		    if(perList.size() > 0){
+		        for (String keyName : perList) {
+                     Peripheral peripheralC = peripherals.get(keyName);
+                       if (peripheralC != null) {
+                       peripheralC.disconnect(force);
+                       callback.invoke();
+                     }
+                }
+		    }
+            else{
+                callback.invoke("Peripheral not found");
+            }
+
 	}
 
 	@ReactMethod

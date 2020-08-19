@@ -263,7 +263,7 @@ class BleManager extends ReactContextBaseJavaModule implements ActivityEventList
 			peripheral.disconnect(force);
 			callback.invoke();
 		} else
-
+		{
 		    Set<String> perList = peripherals.keySet();
 		    if(perList.size() > 0){
 		        for (String keyName : perList) {
@@ -277,6 +277,7 @@ class BleManager extends ReactContextBaseJavaModule implements ActivityEventList
             else{
                 callback.invoke("Peripheral not found");
             }
+		}
 
 	}
 

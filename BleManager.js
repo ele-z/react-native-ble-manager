@@ -332,6 +332,18 @@ class BleManager {
     });
   }
 
+  disableBluetooth() {
+    return new Promise((fulfill, reject) => {
+      bleManager.disableBluetooth(error => {
+        if (error != null) {
+          reject(error);
+        } else {
+          fulfill();
+        }
+      });
+    });
+  }
+
   getConnectedPeripherals(serviceUUIDs) {
     return new Promise((fulfill, reject) => {
       bleManager.getConnectedPeripherals(serviceUUIDs, (error, result) => {
